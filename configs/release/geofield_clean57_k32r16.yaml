@@ -1,0 +1,88 @@
+model:
+  backbone: Qwen/Qwen2.5-1.5B-Instruct
+  load_in_4bit: false
+  load_in_8bit: false
+  dtype: bfloat16
+  device_map: null
+  target_modules:
+    - q_proj
+    - v_proj
+
+gslora:
+  n_primitives: 32
+  rank: 16
+  view_dim: 32
+  lora_alpha: 16
+  mlp_hidden: 256
+  init_mode: data_driven
+  init_gain: 0.5
+
+condition_encoder:
+  source: external_embedding
+  head_type: linear
+  input_dim: 1024
+  cache_name: condition_embeddings_condition_v2_clean57_qwen3_0_6b.pt
+  external_model_name: Qwen/Qwen3-Embedding-0.6B
+  external_instruction: Represent this task condition by its task intent, answer schema, and few-shot behavioral signature so that behaviorally similar tasks are close together.
+  external_max_length: 2048
+
+condition_v2:
+  enabled: true
+  registry_path: ${oc.env:GSLORA_ROOT}/runtime/data/condition_registry_stage1_v2_clean57_seed43.jsonl
+  force_rebuild_registry: false
+  num_support_examples: 4
+  num_support_templates: 3
+  template_text_aux: false
+
+data:
+  data_dir: ${oc.env:GSLORA_ROOT}/runtime/data
+  model_dir: ${oc.env:GSLORA_ROOT}/runtime/models
+  cache_dir: ${oc.env:GSLORA_ROOT}/runtime/data/cache
+  hf_datasets_cache: ${oc.env:GSLORA_ROOT}/runtime/data
+  excluded_task_ids:
+    - lambada
+    - scitail__tsv_format
+    - glue__rte
+    - codah__codah
+    - codah__fold_0
+    - codah__fold_1
+    - codah__fold_2
+    - codah__fold_3
+    - codah__fold_4
+  template_filter_mode: metric_compatible
+  min_valid_templates: 5
+  dataset_manifest_path: ${oc.env:GSLORA_ROOT}/runtime/data/condition_bank_stage1_manifest_max1000_metric5.jsonl
+  eval_seed: 43
+  max_condition_length: 1024
+  max_input_length: 256
+  max_target_length: 64
+  max_eval_samples: 200
+  n_train_templates: 3
+  n_held_out_templates: 2
+  cache_ignore_seed: true
+
+training:
+  model_type: gs
+  output_dir: ${oc.env:GSLORA_ROOT}/runtime/checkpoints
+  batch_size: 24
+  grad_accum_steps: 2
+  num_workers: 0
+  learning_rate: 0.0003
+  num_epochs: 3
+  warmup_ratio: 0.05
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  seed: 43
+  save_steps: 200
+  eval_steps: 200
+  logging_steps: 10
+  fp16: false
+  bf16: true
+  gradient_checkpointing: false
+  pin_memory: true
+
+loss:
+  lambda_cons: 0.0
+  lambda_sparse: 0.005
+  lambda_balance: 0.03
+  consistency_metric: js
