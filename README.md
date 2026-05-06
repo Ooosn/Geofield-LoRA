@@ -1,6 +1,6 @@
 # Geofield-LoRA
 
-This folder is the smaller release-oriented package for Geofield-LoRA.
+This repository contains the code for Geofield-LoRA.
 
 ## Contents
 
