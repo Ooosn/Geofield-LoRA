@@ -10,7 +10,7 @@ This repository contains the code for Geofield-LoRA.
 - `model/`: Geofield-LoRA and baseline model implementations
 - `data/`: dataset loading, template splits, and condition registry code
 - `configs/release/`: release configs for `16x8`, `16x16`, and `32x16`
-- `assets/`: demo GIFs
+- `assets/`: example visualizations
 
 ## Demo
 
@@ -93,6 +93,5 @@ python eval.py \
 
 - `runtime/` is not included here; caches, downloaded models, and checkpoints
   are generated locally.
-- The full repository still contains paper assets and exploratory scripts.
 - `promptsource` is installed from GitHub because the old PyPI package does not
   provide a compatible build for modern Python versions.
