@@ -23,7 +23,8 @@ This repository contains the code for Geofield-LoRA.
 We recommend Python 3.11 and a CUDA-enabled PyTorch install.
 
 ```bash
-cd open_source
+git clone https://github.com/Ooosn/Geofield-LoRA.git
+cd Geofield-LoRA
 
 python -m venv .venv
 source .venv/bin/activate
