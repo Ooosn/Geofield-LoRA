@@ -14,13 +14,9 @@ This repository contains the code for Geofield-LoRA.
 
 ## Demo
 
-`32x16` field fly-through:
-
-![Geofield-LoRA 32x16 field fly-through](assets/pca_gaussian_field_ray_chase_software_32x16_v1.gif)
-
-`16x16` field fly-through:
-
-![Geofield-LoRA 16x16 field fly-through](assets/pca_gaussian_field_ray_chase_software_16x16_v1.gif)
+| `32x16` field fly-through | `16x16` field fly-through |
+| --- | --- |
+| ![Geofield-LoRA 32x16 field fly-through](assets/pca_gaussian_field_ray_chase_software_32x16_v1.gif) | ![Geofield-LoRA 16x16 field fly-through](assets/pca_gaussian_field_ray_chase_software_16x16_v1.gif) |
 
 ## Environment Setup
 
